@@ -56,27 +56,27 @@ const STUDENT_COLUMNS = [
   {
     header: 'Hadir',
     className: 'text-right',
-    render: (row) => <span className="font-semibold text-green-600 tabular-nums">{row.hadir}</span>,
+    render: (row) => <span className="font-semibold text-emerald-700 tabular-nums">{row.hadir}</span>,
   },
   {
     header: 'Izin',
     className: 'text-right',
-    render: (row) => <span className="font-semibold text-blue-600 tabular-nums">{row.izin}</span>,
+    render: (row) => <span className="font-semibold text-sky-700 tabular-nums">{row.izin}</span>,
   },
   {
     header: 'Sakit',
     className: 'text-right',
-    render: (row) => <span className="font-semibold text-yellow-600 tabular-nums">{row.sakit}</span>,
+    render: (row) => <span className="font-semibold text-amber-700 tabular-nums">{row.sakit}</span>,
   },
   {
     header: 'Alpha',
     className: 'text-right',
-    render: (row) => <span className="font-semibold text-red-600 tabular-nums">{row.alpha}</span>,
+    render: (row) => <span className="font-semibold text-rose-700 tabular-nums">{row.alpha}</span>,
   },
   {
     header: 'Total',
     className: 'text-right',
-    render: (row) => <span className="text-slate-600 tabular-nums">{row.total}</span>,
+    render: (row) => <span className="text-stone-500 tabular-nums">{row.total}</span>,
   },
   {
     header: '% Kehadiran',
@@ -88,17 +88,17 @@ const STUDENT_COLUMNS = [
 
 function buildAggregateCards(agg, studentCount) {
   return [
-    { title: 'Total Murid',   value: studentCount,     subtitle: 'Terdaftar',             accentClass: 'bg-slate-400', icon: '👥' },
-    { title: 'Total Hari',    value: agg.total,        subtitle: 'Record valid',           accentClass: 'bg-slate-400', icon: '📅' },
-    { title: 'Hadir',         value: agg.hadir,        subtitle: `${agg.percentage}% kehadiran`, accentClass: 'bg-green-500', icon: '✅' },
-    { title: 'Izin',          value: agg.izin,         subtitle: agg.total > 0 ? `${((agg.izin/agg.total)*100).toFixed(1)}%` : '0.0%', accentClass: 'bg-blue-500', icon: '📝' },
-    { title: 'Sakit',         value: agg.sakit,        subtitle: agg.total > 0 ? `${((agg.sakit/agg.total)*100).toFixed(1)}%` : '0.0%', accentClass: 'bg-yellow-500', icon: '🤒' },
-    { title: 'Alpha',         value: agg.alpha,        subtitle: agg.total > 0 ? `${((agg.alpha/agg.total)*100).toFixed(1)}%` : '0.0%', accentClass: 'bg-red-500', icon: '⚠️' },
+    { title: 'Total Murid',   value: studentCount, subtitle: 'Terdaftar',                  accentClass: 'bg-zinc-600',    icon: '👥' },
+    { title: 'Total Hari',    value: agg.total,    subtitle: 'Record valid',               accentClass: 'bg-zinc-600',    icon: '📅' },
+    { title: 'Hadir',         value: agg.hadir,    subtitle: `${agg.percentage}% kehadiran`, accentClass: 'bg-emerald-600', icon: '✅' },
+    { title: 'Izin',          value: agg.izin,     subtitle: agg.total > 0 ? `${((agg.izin/agg.total)*100).toFixed(1)}%` : '0.0%',   accentClass: 'bg-sky-600',     icon: '📝' },
+    { title: 'Sakit',         value: agg.sakit,    subtitle: agg.total > 0 ? `${((agg.sakit/agg.total)*100).toFixed(1)}%` : '0.0%', accentClass: 'bg-amber-600',   icon: '🤒' },
+    { title: 'Alpha',         value: agg.alpha,    subtitle: agg.total > 0 ? `${((agg.alpha/agg.total)*100).toFixed(1)}%` : '0.0%', accentClass: 'bg-rose-600',    icon: '⚠️' },
     {
       title: '% Kehadiran Keseluruhan',
       value: `${agg.percentage}%`,
       subtitle: `${agg.hadir} hadir dari ${agg.total}`,
-      accentClass: parseFloat(agg.percentage) >= 80 ? 'bg-green-500' : parseFloat(agg.percentage) >= 60 ? 'bg-yellow-500' : 'bg-red-500',
+      accentClass: parseFloat(agg.percentage) >= 80 ? 'bg-emerald-600' : parseFloat(agg.percentage) >= 60 ? 'bg-amber-600' : 'bg-rose-600',
       icon: '📊',
     },
   ];

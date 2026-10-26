@@ -26,41 +26,41 @@ function validateForm(email, password) {
 /** Animated background blobs for the hero panel */
 function HeroPanel() {
   return (
-    <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 flex-col items-center justify-center p-12">
-      {/* Decorative blobs */}
-      <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-500 rounded-full opacity-20 blur-3xl" />
-      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-indigo-400 rounded-full opacity-20 blur-3xl" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-white rounded-full opacity-5 blur-2xl" />
+    <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-zinc-950 flex-col items-center justify-center p-12">
+      {/* Subtle texture — two soft orbs, very low opacity */}
+      <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-400 rounded-full opacity-5 blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-72 h-72 bg-zinc-400 rounded-full opacity-10 blur-3xl" />
 
       <div className="relative z-10 text-center text-white max-w-sm">
         {/* Logo mark */}
-        <div className="w-20 h-20 bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
-          <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <div className="w-16 h-16 bg-white/10 border border-white/15 rounded-2xl flex items-center justify-center mx-auto mb-8">
+          <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
           </svg>
         </div>
 
-        <h1 className="text-4xl font-bold mb-4 tracking-tight">AttendApp</h1>
-        <p className="text-blue-100 text-lg leading-relaxed mb-10">
-          Sistem absensi instructor & murid yang cerdas, efisien, dan mudah digunakan.
+        <h1 className="text-3xl font-bold mb-3 tracking-tight">AttendApp</h1>
+        <p className="text-zinc-400 text-base leading-relaxed mb-10">
+          Sistem absensi instructor &amp; murid yang efisien dan mudah digunakan.
         </p>
 
         {/* Feature list */}
-        <ul className="space-y-4 text-left">
+        <ul className="space-y-3 text-left">
           {[
-            { icon: '📊', text: 'Dashboard statistik real-time' },
-            { icon: '🗓️', text: 'Riwayat absensi 60 hari terakhir' },
-            { icon: '🔍', text: 'Filter canggih per tanggal & status' },
-            { icon: '👥', text: 'Pantau absensi seluruh murid' },
-          ].map(({ icon, text }) => (
+            { text: 'Dashboard statistik real-time' },
+            { text: 'Riwayat absensi 60 hari terakhir' },
+            { text: 'Filter canggih per tanggal & status' },
+            { text: 'Pantau absensi seluruh murid' },
+          ].map(({ text }) => (
             <li key={text} className="flex items-center gap-3">
-              <span className="w-9 h-9 bg-white/15 backdrop-blur-sm rounded-lg flex items-center justify-center text-lg shrink-0">
-                {icon}
-              </span>
-              <span className="text-blue-50 text-sm">{text}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+              <span className="text-zinc-300 text-sm">{text}</span>
             </li>
           ))}
         </ul>
+
+        {/* Bottom tagline */}
+        <p className="mt-12 text-zinc-600 text-xs">Coding Test · Front-End Engineer</p>
       </div>
     </div>
   );
@@ -89,7 +89,7 @@ function DemoCard({ user, onSelect }) {
     <button
       type="button"
       onClick={() => onSelect(user)}
-      className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-200 transition-all duration-150 text-left w-full group"
+      className="flex items-center gap-3 p-3 rounded-xl border border-stone-200 bg-stone-50 hover:bg-zinc-50 hover:border-zinc-300 transition-all duration-150 text-left w-full group"
     >
       <img
         src={user.image}
@@ -97,12 +97,12 @@ function DemoCard({ user, onSelect }) {
         className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm shrink-0"
       />
       <div className="flex-1 min-w-0">
-        <p className="text-xs font-semibold text-slate-700 group-hover:text-blue-700 truncate">
+        <p className="text-xs font-semibold text-stone-700 group-hover:text-zinc-900 truncate">
           {user.firstName} {user.lastName}
           <span className={`ml-1.5 text-[10px] font-medium px-1.5 py-0.5 rounded-full ${
             user.role === 'admin'
-              ? 'bg-purple-100 text-purple-700'
-              : 'bg-slate-200 text-slate-600'
+              ? 'bg-zinc-800 text-zinc-100'
+              : 'bg-stone-200 text-stone-600'
           }`}>
             {user.role}
           </span>

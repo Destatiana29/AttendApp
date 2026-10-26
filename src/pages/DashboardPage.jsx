@@ -145,8 +145,8 @@ export default function DashboardPage() {
           icon="🧑‍🏫"
           title="Absensi Saya"
           subtitle="Rekap kehadiran pribadi Anda"
-          accentFrom="from-blue-600"
-          accentTo="to-indigo-700"
+          accentFrom="from-zinc-800"
+          accentTo="to-zinc-900"
           linkLabel="Lihat rincian"
           stats={[
             { value: personalStats.hadir,           label: 'Hadir' },
@@ -167,8 +167,8 @@ export default function DashboardPage() {
                 ? `${studentSummary.count} murid terdaftar`
                 : 'Login ulang untuk melihat data'
             }
-            accentFrom="from-violet-600"
-            accentTo="to-purple-700"
+            accentFrom="from-emerald-800"
+            accentTo="to-teal-900"
             linkLabel="Lihat data murid"
             stats={
               studentSummary
@@ -198,19 +198,19 @@ export default function DashboardPage() {
         </div>
 
         <div className="space-y-3">
-          <StatusBar label="Hadir"  count={personalStats.hadir}  total={personalStats.total} colorClass="bg-green-500" />
-          <StatusBar label="Izin"   count={personalStats.izin}   total={personalStats.total} colorClass="bg-blue-500"  />
-          <StatusBar label="Sakit"  count={personalStats.sakit}  total={personalStats.total} colorClass="bg-yellow-500"/>
-          <StatusBar label="Alpha"  count={personalStats.alpha}  total={personalStats.total} colorClass="bg-red-500"   />
+          <StatusBar label="Hadir"  count={personalStats.hadir}  total={personalStats.total} colorClass="bg-emerald-500" />
+          <StatusBar label="Izin"   count={personalStats.izin}   total={personalStats.total} colorClass="bg-sky-500"  />
+          <StatusBar label="Sakit"  count={personalStats.sakit}  total={personalStats.total} colorClass="bg-amber-500"/>
+          <StatusBar label="Alpha"  count={personalStats.alpha}  total={personalStats.total} colorClass="bg-rose-500"   />
         </div>
 
         {/* Legend */}
         <div className="flex flex-wrap gap-4 mt-5 pt-5 border-t border-slate-50">
           {[
-            { label: 'Hadir',  count: personalStats.hadir,  color: 'bg-green-500'  },
-            { label: 'Izin',   count: personalStats.izin,   color: 'bg-blue-500'   },
-            { label: 'Sakit',  count: personalStats.sakit,  color: 'bg-yellow-500' },
-            { label: 'Alpha',  count: personalStats.alpha,  color: 'bg-red-500'    },
+            { label: 'Hadir',  count: personalStats.hadir,  color: 'bg-emerald-500' },
+            { label: 'Izin',   count: personalStats.izin,   color: 'bg-sky-500'     },
+            { label: 'Sakit',  count: personalStats.sakit,  color: 'bg-amber-500'   },
+            { label: 'Alpha',  count: personalStats.alpha,  color: 'bg-rose-500'    },
           ].map((item) => (
             <div key={item.label} className="flex items-center gap-1.5">
               <span className={`w-2.5 h-2.5 rounded-full ${item.color}`} />

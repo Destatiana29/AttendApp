@@ -1,13 +1,13 @@
 /**
  * Button — reusable button with variant and size presets.
- * Variants: primary | secondary | danger | ghost
+ * Primary = dark zinc, not electric blue.
  */
 
 const VARIANTS = {
-  primary:   'bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow-md disabled:bg-blue-300',
-  secondary: 'bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 hover:border-slate-300 shadow-sm',
-  danger:    'bg-red-500 hover:bg-red-600 text-white shadow-sm disabled:bg-red-300',
-  ghost:     'bg-transparent hover:bg-slate-100 text-slate-600 hover:text-slate-900',
+  primary:   'bg-zinc-900 hover:bg-zinc-700 text-white shadow-sm hover:shadow-md disabled:bg-zinc-400',
+  secondary: 'bg-white hover:bg-stone-50 text-stone-700 border border-stone-200 hover:border-stone-300 shadow-sm',
+  danger:    'bg-rose-600 hover:bg-rose-700 text-white shadow-sm disabled:bg-rose-300',
+  ghost:     'bg-transparent hover:bg-stone-100 text-stone-600 hover:text-stone-900',
 };
 
 const SIZES = {
@@ -16,14 +16,6 @@ const SIZES = {
   lg: 'px-6 py-2.5 text-sm',
 };
 
-/**
- * @param {{
- *   variant?: 'primary'|'secondary'|'danger'|'ghost',
- *   size?: 'sm'|'md'|'lg',
- *   loading?: boolean,
- *   children: React.ReactNode,
- * } & React.ButtonHTMLAttributes<HTMLButtonElement>} props
- */
 export default function Button({
   variant = 'primary',
   size = 'md',

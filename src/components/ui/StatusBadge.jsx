@@ -1,13 +1,13 @@
 /**
  * StatusBadge — colored pill badge for attendance status.
- * hadir=green | izin=blue | sakit=yellow | alpha=red
+ * Refined palette: emerald / sky / amber / rose  (not generic green/blue/yellow/red)
  */
 
 const STATUS_CONFIG = {
-  hadir:  { label: 'Hadir',  bg: 'bg-green-100',  text: 'text-green-700',  dot: 'bg-green-500'  },
-  izin:   { label: 'Izin',   bg: 'bg-blue-100',   text: 'text-blue-700',   dot: 'bg-blue-500'   },
-  sakit:  { label: 'Sakit',  bg: 'bg-yellow-100', text: 'text-yellow-700', dot: 'bg-yellow-500' },
-  alpha:  { label: 'Alpha',  bg: 'bg-red-100',    text: 'text-red-700',    dot: 'bg-red-500'    },
+  hadir:  { label: 'Hadir',  bg: 'bg-emerald-50', text: 'text-emerald-700', dot: 'bg-emerald-500', border: 'border-emerald-200' },
+  izin:   { label: 'Izin',   bg: 'bg-sky-50',     text: 'text-sky-700',     dot: 'bg-sky-500',     border: 'border-sky-200'     },
+  sakit:  { label: 'Sakit',  bg: 'bg-amber-50',   text: 'text-amber-700',   dot: 'bg-amber-500',   border: 'border-amber-200'   },
+  alpha:  { label: 'Alpha',  bg: 'bg-rose-50',    text: 'text-rose-700',    dot: 'bg-rose-500',    border: 'border-rose-200'    },
 };
 
 /**
@@ -18,7 +18,7 @@ export default function StatusBadge({ status, size = 'md' }) {
 
   if (!cfg) {
     return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 text-xs font-medium">
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-stone-100 text-stone-500 text-xs font-medium border border-stone-200">
         {status ?? '—'}
       </span>
     );
@@ -29,7 +29,7 @@ export default function StatusBadge({ status, size = 'md' }) {
     : 'px-2.5 py-1 text-xs';
 
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full font-medium ${cfg.bg} ${cfg.text} ${sizeClass}`}>
+    <span className={`inline-flex items-center gap-1.5 rounded-full font-medium border ${cfg.bg} ${cfg.text} ${cfg.border} ${sizeClass}`}>
       <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${cfg.dot}`} />
       {cfg.label}
     </span>

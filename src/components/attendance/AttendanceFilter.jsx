@@ -28,7 +28,7 @@ export default function AttendanceFilter({ filters, onChange, onReset, showNameS
 
   const labelClass = 'block text-xs font-medium text-slate-500 mb-1';
   const inputClass =
-    'w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-700 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 focus:bg-white transition-all duration-150';
+    'w-full px-3 py-2 rounded-xl border border-stone-200 bg-stone-50 text-sm text-stone-700 outline-none focus:border-zinc-400 focus:ring-2 focus:ring-zinc-100 focus:bg-white transition-all duration-150';
 
   return (
     <div className="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm">
@@ -114,8 +114,8 @@ export default function AttendanceFilter({ filters, onChange, onReset, showNameS
 
       {/* Active filter indicator */}
       {isActive && (
-        <p className="mt-3 text-xs text-blue-600 flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-blue-500 inline-block" />
+        <p className="mt-3 text-xs text-stone-600 flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-zinc-600 inline-block" />
           Filter aktif — statistik dan tabel dihitung ulang
         </p>
       )}
