@@ -1,18 +1,24 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
-const NAV_LINKS = [
-  { to: '/',          label: 'Dashboard'    },
-  { to: '/personal',  label: 'Absensi Saya' },
-  { to: '/students',  label: 'Data Murid'   },
+const ALL_NAV_LINKS = [
+  { to: '/',          label: 'Dashboard',    instructorOnly: false },
+  { to: '/personal',  label: 'Absensi Saya', instructorOnly: false },
+  { to: '/students',  label: 'Data Murid',   instructorOnly: true  },
 ];
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
+  const { user, logout, isInstructor } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Students (role:'user') cannot access Data Murid
+  const NAV_LINKS = useMemo(
+    () => ALL_NAV_LINKS.filter((l) => !l.instructorOnly || isInstructor),
+    [isInstructor]
+  );
 
   const handleLogout = () => {
     logout();

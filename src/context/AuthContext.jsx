@@ -41,8 +41,14 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('instructor_user');
   };
 
+  /**
+   * isInstructor: true when the logged-in user has role 'admin' or 'moderator'.
+   * Users with role 'user' are treated as students — they can only view their own attendance.
+   */
+  const isInstructor = user ? user.role !== 'user' : false;
+
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout, allUsers, setAllUsers }}>
+    <AuthContext.Provider value={{ user, isLoading, login, logout, allUsers, setAllUsers, isInstructor }}>
       {children}
     </AuthContext.Provider>
   );

@@ -80,7 +80,7 @@ function SummaryCard({ to, title, subtitle, icon, stats, linkLabel, accentFrom, 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function DashboardPage() {
-  const { user, allUsers } = useAuth();
+  const { user, allUsers, isInstructor } = useAuth();
 
   // ── Personal stats (always available — local data) ────────────────────────
   const personalStats = useMemo(() => {
@@ -126,13 +126,20 @@ export default function DashboardPage() {
             <p className="font-semibold text-slate-800 text-sm leading-none">
               {user.firstName} {user.lastName}
             </p>
-            <p className="text-[11px] text-slate-400 mt-1 capitalize">{user.role} · {user.email}</p>
+          <p className="text-[11px] text-slate-400 mt-1 capitalize">
+              {user.role}
+              {isInstructor
+                ? <span className="ml-1.5 text-purple-500 font-semibold">· Instructor</span>
+                : <span className="ml-1.5 text-blue-500 font-semibold">· Murid</span>
+              }
+              · {user.email}
+            </p>
           </div>
         </div>
       </div>
 
       {/* ── Summary cards ────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className={`grid grid-cols-1 gap-4 ${isInstructor ? 'md:grid-cols-2' : ''}`}>
         <SummaryCard
           to="/personal"
           icon="🧑‍🏫"
@@ -142,39 +149,42 @@ export default function DashboardPage() {
           accentTo="to-indigo-700"
           linkLabel="Lihat rincian"
           stats={[
-            { value: personalStats.hadir,      label: 'Hadir' },
+            { value: personalStats.hadir,           label: 'Hadir' },
             { value: `${personalStats.percentage}%`, label: 'Kehadiran' },
-            { value: personalStats.izin,       label: 'Izin' },
-            { value: personalStats.alpha,      label: 'Alpha' },
+            { value: personalStats.izin,            label: 'Izin' },
+            { value: personalStats.alpha,           label: 'Alpha' },
           ]}
         />
 
-        <SummaryCard
-          to="/students"
-          icon="👥"
-          title="Data Murid"
-          subtitle={
-            studentSummary
-              ? `${studentSummary.count} murid terdaftar`
-              : 'Login ulang untuk melihat data'
-          }
-          accentFrom="from-violet-600"
-          accentTo="to-purple-700"
-          linkLabel="Lihat data murid"
-          stats={
-            studentSummary
-              ? [
-                  { value: studentSummary.count,                     label: 'Total Murid' },
-                  { value: `${studentSummary.agg.percentage}%`,       label: 'Rerata Hadir' },
-                  { value: studentSummary.agg.hadir,                 label: 'Total Hadir' },
-                  { value: studentSummary.agg.alpha,                 label: 'Total Alpha' },
-                ]
-              : [
-                  { value: '—', label: 'Total Murid' },
-                  { value: '—', label: 'Rerata Hadir' },
-                ]
-          }
-        />
+        {/* Only instructors can see the Students card */}
+        {isInstructor && (
+          <SummaryCard
+            to="/students"
+            icon="👥"
+            title="Data Murid"
+            subtitle={
+              studentSummary
+                ? `${studentSummary.count} murid terdaftar`
+                : 'Login ulang untuk melihat data'
+            }
+            accentFrom="from-violet-600"
+            accentTo="to-purple-700"
+            linkLabel="Lihat data murid"
+            stats={
+              studentSummary
+                ? [
+                    { value: studentSummary.count,               label: 'Total Murid' },
+                    { value: `${studentSummary.agg.percentage}%`, label: 'Rerata Hadir' },
+                    { value: studentSummary.agg.hadir,           label: 'Total Hadir' },
+                    { value: studentSummary.agg.alpha,           label: 'Total Alpha' },
+                  ]
+                : [
+                    { value: '—', label: 'Total Murid' },
+                    { value: '—', label: 'Rerata Hadir' },
+                  ]
+            }
+          />
+        )}
       </div>
 
       {/* ── Personal distribution chart ───────────────────────────────────── */}
@@ -212,7 +222,8 @@ export default function DashboardPage() {
       </div>
 
       {/* ── Quick navigation tiles ────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      {/* Filter tiles so students don't see Data Murid shortcut */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {[
           {
             to: '/personal',
@@ -220,6 +231,7 @@ export default function DashboardPage() {
             desc: 'Lihat riwayat & filter kehadiran',
             icon: '📋',
             bg: 'hover:bg-blue-50 hover:border-blue-200',
+            instructorOnly: false,
           },
           {
             to: '/students',
@@ -227,6 +239,7 @@ export default function DashboardPage() {
             desc: 'Rekap dan statistik per murid',
             icon: '📊',
             bg: 'hover:bg-violet-50 hover:border-violet-200',
+            instructorOnly: true,
           },
           {
             to: '/personal',
@@ -234,23 +247,26 @@ export default function DashboardPage() {
             desc: 'Saring per tanggal dan status',
             icon: '🔍',
             bg: 'hover:bg-slate-100 hover:border-slate-300',
+            instructorOnly: false,
           },
-        ].map((item) => (
-          <Link
-            key={item.to + item.label}
-            to={item.to}
-            className={`flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 shadow-sm transition-all duration-150 ${item.bg} group`}
-          >
-            <span className="text-2xl">{item.icon}</span>
-            <div>
-              <p className="font-semibold text-sm text-slate-800 group-hover:text-slate-900">{item.label}</p>
-              <p className="text-xs text-slate-400">{item.desc}</p>
-            </div>
-            <svg className="w-4 h-4 text-slate-300 group-hover:text-slate-500 ml-auto shrink-0 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
-        ))}
+        ]
+          .filter((item) => !item.instructorOnly || isInstructor)
+          .map((item) => (
+            <Link
+              key={item.to + item.label}
+              to={item.to}
+              className={`flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 shadow-sm transition-all duration-150 ${item.bg} group`}
+            >
+              <span className="text-2xl">{item.icon}</span>
+              <div>
+                <p className="font-semibold text-sm text-slate-800 group-hover:text-slate-900">{item.label}</p>
+                <p className="text-xs text-slate-400">{item.desc}</p>
+              </div>
+              <svg className="w-4 h-4 text-slate-300 group-hover:text-slate-500 ml-auto shrink-0 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          ))}
       </div>
     </div>
   );

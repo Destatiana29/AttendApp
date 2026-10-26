@@ -107,7 +107,7 @@ function buildAggregateCards(agg, studentCount) {
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function StudentsPage() {
-  const { user, allUsers, setAllUsers } = useAuth();
+  const { user, allUsers, setAllUsers, isInstructor } = useAuth();
 
   // Users state — prefer context cache to avoid re-fetch
   const [usersData, setUsersData] = useState(allUsers);
@@ -199,6 +199,26 @@ export default function StudentsPage() {
   // ── Loading & error states ────────────────────────────────────────────────
   if (loading) return <Spinner label="Memuat data murid…" size="lg" />;
   if (error)   return <ErrorMessage message={error} onRetry={() => { setError(null); setLoading(true); }} />;
+
+  // ── Role guard: hanya instructor (admin/moderator) yang boleh akses ────────
+  if (!isInstructor) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 py-24 px-4">
+        <div className="w-16 h-16 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center">
+          <svg className="w-8 h-8 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+          </svg>
+        </div>
+        <div className="text-center max-w-sm">
+          <p className="font-semibold text-slate-800 text-lg mb-2">Akses Dibatasi</p>
+          <p className="text-sm text-slate-500">
+            Halaman Data Murid hanya dapat diakses oleh <strong>instructor</strong> (admin / moderator).
+            Akun Anda terdaftar sebagai <strong>murid</strong>.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
