@@ -138,7 +138,14 @@ export default function PersonalPage() {
     [filteredRecords]
   );
 
-  // 5. Compute stats from filtered data
+  // 5. Date range of valid data (for filter hint)
+  const dateRange = useMemo(() => {
+    if (!validRecords.length) return null;
+    const dates = validRecords.map((r) => r.date).sort();
+    return { min: dates[0], max: dates[dates.length - 1] };
+  }, [validRecords]);
+
+  // 6. Compute stats from filtered data
   const stats = useMemo(() => getPersonStats(filteredRecords), [filteredRecords]);
 
   const statsCards = useMemo(() => buildStatsCards(stats), [stats]);
@@ -202,6 +209,7 @@ export default function PersonalPage() {
         onChange={setFilters}
         onReset={handleReset}
         showNameSearch={false}
+        dateRange={dateRange}
       />
 
       {/* Results summary */}

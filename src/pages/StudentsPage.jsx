@@ -194,6 +194,13 @@ export default function StudentsPage() {
     [visibleStudents]
   );
 
+  // Date range of valid data (for filter hint)
+  const dateRange = useMemo(() => {
+    if (!validRecords.length) return null;
+    const dates = validRecords.map((r) => r.date).sort();
+    return { min: dates[0], max: dates[dates.length - 1] };
+  }, [validRecords]);
+
   const handleReset = () => setFilters(DEFAULT_FILTERS);
 
   // ── Loading & error states ────────────────────────────────────────────────
@@ -256,6 +263,7 @@ export default function StudentsPage() {
         onChange={setFilters}
         onReset={handleReset}
         showNameSearch={true}
+        dateRange={dateRange}
       />
 
       {/* Results summary */}

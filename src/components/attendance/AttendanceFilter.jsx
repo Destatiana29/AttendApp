@@ -9,29 +9,62 @@ const STATUS_OPTIONS = [
   { value: 'alpha', label: 'Alpha' },
 ];
 
+/** Format 'YYYY-MM-DD' → '21 Okt 2024' */
+function fmtDate(dateStr) {
+  if (!dateStr) return '—';
+  return new Date(`${dateStr}T00:00:00`).toLocaleDateString('id-ID', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+}
+
 /**
  * AttendanceFilter — filter UI for attendance pages.
- * Used on both PersonalPage and StudentsPage.
  *
  * @param {{
  *   filters: { startDate: string, endDate: string, status: string, name: string },
  *   onChange: (filters: object) => void,
  *   onReset: () => void,
- *   showNameSearch?: boolean,  // show name search field (StudentsPage only)
+ *   showNameSearch?: boolean,
+ *   dateRange?: { min: string, max: string } | null,  // YYYY-MM-DD, from actual records
  * }} props
  */
-export default function AttendanceFilter({ filters, onChange, onReset, showNameSearch = false }) {
+export default function AttendanceFilter({
+  filters,
+  onChange,
+  onReset,
+  showNameSearch = false,
+  dateRange = null,
+}) {
   const isActive =
     filters.startDate || filters.endDate || filters.status || filters.name;
 
   const set = (key, value) => onChange({ ...filters, [key]: value });
 
-  const labelClass = 'block text-xs font-medium text-slate-500 mb-1';
+  const labelClass = 'block text-xs font-medium text-stone-500 mb-1';
   const inputClass =
     'w-full px-3 py-2 rounded-xl border border-stone-200 bg-stone-50 text-sm text-stone-700 outline-none focus:border-zinc-400 focus:ring-2 focus:ring-zinc-100 focus:bg-white transition-all duration-150';
 
   return (
-    <div className="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm">
+    <div className="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm space-y-3">
+
+      {/* ── Data range hint ─────────────────────────────────────────────────── */}
+      {dateRange && (
+        <div className="flex items-center gap-2 px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-500">
+          <svg className="w-3.5 h-3.5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <span>
+            Data tersedia:{' '}
+            <strong className="text-stone-700">{fmtDate(dateRange.min)}</strong>
+            {' '}—{' '}
+            <strong className="text-stone-700">{fmtDate(dateRange.max)}</strong>
+          </span>
+        </div>
+      )}
+
+      {/* ── Filter inputs ───────────────────────────────────────────────────── */}
       <div className="flex flex-wrap gap-3 items-end">
         {/* Start date */}
         <div className="flex-1 min-w-[140px]">
@@ -40,7 +73,8 @@ export default function AttendanceFilter({ filters, onChange, onReset, showNameS
             id="filter-start"
             type="date"
             value={filters.startDate}
-            max={filters.endDate || undefined}
+            min={dateRange?.min || undefined}
+            max={filters.endDate || dateRange?.max || undefined}
             onChange={(e) => set('startDate', e.target.value)}
             className={inputClass}
           />
@@ -53,7 +87,8 @@ export default function AttendanceFilter({ filters, onChange, onReset, showNameS
             id="filter-end"
             type="date"
             value={filters.endDate}
-            min={filters.startDate || undefined}
+            min={filters.startDate || dateRange?.min || undefined}
+            max={dateRange?.max || undefined}
             onChange={(e) => set('endDate', e.target.value)}
             className={inputClass}
           />
@@ -79,7 +114,7 @@ export default function AttendanceFilter({ filters, onChange, onReset, showNameS
           <div className="flex-1 min-w-[160px]">
             <label htmlFor="filter-name" className={labelClass}>Cari Nama Murid</label>
             <div className="relative">
-              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input
@@ -114,7 +149,7 @@ export default function AttendanceFilter({ filters, onChange, onReset, showNameS
 
       {/* Active filter indicator */}
       {isActive && (
-        <p className="mt-3 text-xs text-stone-600 flex items-center gap-1.5">
+        <p className="text-xs text-stone-600 flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-zinc-600 inline-block" />
           Filter aktif — statistik dan tabel dihitung ulang
         </p>
