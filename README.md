@@ -5,7 +5,7 @@ Dibangun sebagai coding test posisi **Front-End Engineer**.
 
 ---
 
-## ✨ Fitur
+##  Fitur
 
 | Fitur | Keterangan |
 |---|---|
@@ -21,7 +21,7 @@ Dibangun sebagai coding test posisi **Front-End Engineer**.
 
 ---
 
-## 🎭 Akun Demo
+##  Akun Demo
 
 Akun demo ditampilkan langsung di halaman login dan diambil secara real-time dari DummyJSON —
 **klik kartu akun demo untuk mengisi form otomatis**.
@@ -30,7 +30,7 @@ Akun demo ditampilkan langsung di halaman login dan diambil secara real-time dar
 
 ---
 
-## 🚀 Cara Menjalankan
+##  Cara Menjalankan
 
 ```bash
 # 1. Clone repository
@@ -47,7 +47,7 @@ npm run dev
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Teknologi | Versi | Keterangan |
 |---|---|---|
@@ -65,7 +65,7 @@ Tidak ada library tambahan di luar tech stack yang diwajibkan.
 
 ---
 
-## 📁 Struktur Folder
+## Struktur Folder
 
 ```
 src/
@@ -108,7 +108,7 @@ src/
 
 ---
 
-## 📊 Data Absensi
+##  Data Absensi
 
 DummyJSON **tidak memiliki endpoint absensi**, sehingga data absensi dibuat secara lokal di
 `src/data/attendanceGenerator.js` dengan ketentuan:
@@ -132,7 +132,7 @@ Persentase Kehadiran = (hadir / total hari valid) × 100
 
 ---
 
-## ✅ Unit Check
+##  Unit Check
 
 ```bash
 node scripts/checkData.mjs
@@ -143,7 +143,7 @@ Memverifikasi: generator determinism, validator, stat calculation, NaN safety.
 
 ---
 
-## 🔐 Keamanan & Catatan
+## Keamanan & Catatan
 
 - Password disimpan dalam plaintext sesuai data DummyJSON (bukan untuk production)
 - Sesi disimpan di `localStorage` — logout menghapusnya
